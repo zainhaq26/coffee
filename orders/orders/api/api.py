@@ -4,7 +4,8 @@ from fastapi.openapi.models import Response
 from starlette import status
  
 from orders.app import app
- 
+from orders.api.schemas import CreateOrderSchema
+
 order = {
     'id': 'ff0f1355-e821-4178-9567-550dec27a373',
     'status': 'completed',
@@ -24,10 +25,9 @@ def get_orders():
     return [
         order
     ]
- 
- 
+    
 @app.post('/orders', status_code=status.HTTP_201_CREATED)
-def create_order():
+def create_order(order_details: CreateOrderSchema):
     return order
  
  
@@ -37,7 +37,7 @@ def get_order(order_id: UUID):
  
  
 @app.put('/orders/{order_id}')
-def update_order(order_id: UUID):
+def update_order(order_id: UUID, order_details: CreateOrderSchema):
     return order
  
  
